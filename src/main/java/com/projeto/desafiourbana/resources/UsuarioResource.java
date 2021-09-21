@@ -60,6 +60,7 @@ public class UsuarioResource extends AbstractResource<Usuario, UsuarioService> i
 		Usuario objetoModificado = service.buscarUsuarioPorCodigo(codigo);
 		objetoModificado.setNome(dto.getNome());
 		objetoModificado.setEmail(dto.getEmail());
+		System.out.println(objetoModificado.getEmail());
 		Usuario objetoEditado = service.atualizar(codigo, objetoModificado);
 
 		return ResponseEntity.ok(objetoEditado);
@@ -79,8 +80,8 @@ public class UsuarioResource extends AbstractResource<Usuario, UsuarioService> i
 	}
 
 	@Override
-	public ResponseEntity<Void> delete(Long codigo) {
-		service.deletar(codigo);
+	public ResponseEntity<Void> delete(Long codigo) throws ServiceApplicationException {
+		service.deletarConta(codigo);
 		return ResponseEntity.noContent().header("Entity", Long.toString(codigo)).build();
 	}
 

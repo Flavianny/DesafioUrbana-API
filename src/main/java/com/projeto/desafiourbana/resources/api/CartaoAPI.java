@@ -44,7 +44,7 @@ public interface CartaoAPI {
 			throws ServiceApplicationException;
 	
 	@ApiOperation(value = "Atualiza o status de um determinado cartão")
-	@PutMapping(value = "/{codigo}/status")
+	@PutMapping(value = "/{codigo}/{status}")
 	public ResponseEntity<Void> putStatus(@PathVariable Long codigo, @PathVariable Boolean status)
 			throws ServiceApplicationException;
 

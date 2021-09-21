@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.projeto.desafiourbana.services.exceptions.ContaNaoPodeSerExcluidaException;
 import com.projeto.desafiourbana.services.exceptions.DadoInvalidoException;
 import com.projeto.desafiourbana.services.exceptions.EmailIndisponivelException;
 import com.projeto.desafiourbana.services.exceptions.EmailIndisponivelRuntimeException;
@@ -187,6 +188,17 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		String mensagemUsuario = montarMensagemUsuario("email-inexistente");
+		String mensagemDesenvolvedor = exception.toString();
+		List<ErroMensagem> responseBody = montarResponseBody(status, mensagemUsuario, mensagemDesenvolvedor);
+
+		return ResponseEntity.status(status).body(responseBody);
+	}
+	
+	@ExceptionHandler({ ContaNaoPodeSerExcluidaException.class })
+	public ResponseEntity<Object> usuarioNaoPodeSerExcluido(ContaNaoPodeSerExcluidaException exception, WebRequest request) {
+
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		String mensagemUsuario = montarMensagemUsuario("usuario.nao-pode-ser-excluido");
 		String mensagemDesenvolvedor = exception.toString();
 		List<ErroMensagem> responseBody = montarResponseBody(status, mensagemUsuario, mensagemDesenvolvedor);
 

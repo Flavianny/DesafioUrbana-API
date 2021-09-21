@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.projeto.desafiourbana.domain.Cartao;
 import com.projeto.desafiourbana.domain.Usuario;
 import com.projeto.desafiourbana.repositories.UsuarioRepository;
 import com.projeto.desafiourbana.repositories.filters.UsuarioFilter;
@@ -135,9 +136,13 @@ public class UsuarioService extends AbstractService<Usuario, UsuarioRepository> 
 	}
 
 	public void validarExclusao(Usuario usuario) throws ServiceApplicationException {
-		if (usuario.getCartoes().size() > 0)
-			throw new ContaNaoPodeSerExcluidaException(
-					"A conta está associada a um cartão então não pode ser excluída");
+		for (Cartao cartao : usuario.getCartoes()) {
+			if (cartao.getStatus() == true)
+				throw new ContaNaoPodeSerExcluidaException(
+						"A conta está associada a um cartão ativo então não pode ser excluída");
+
+		}
+
 	}
 
 }

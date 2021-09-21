@@ -54,7 +54,7 @@ public class Cartao extends ObjetoIdentificado {
 		this.nome = nome;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
